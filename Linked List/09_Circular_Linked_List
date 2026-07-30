@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+class Node
+{
+    public:
+    int val;
+    Node *next;
+    public:
+    Node(int val)
+    {
+        this->val=val;
+        next=nullptr;
+    };
+};
+class CircularLinkedList
+{
+    private:
+    Node *Head;
+    public:
+    CircularLinkedList()
+    {
+        Head=nullptr;
+    }
+    void Display()
+    {
+        Node *p=Head;
+        do
+        {
+            cout<<p->val<<" \n";
+            p=p->next;   
+        } while(p!=Head);
+    }
+    void Count()
+    {
+        Node *p=Head;
+        int count=0;
+        do
+        {
+            count++;
+            p=p->next;
+        } while (p!=Head);
+    }
+    void Insert(int x, int index)
+    {
+        Node *newNode=new Node(x);
+        Node *temp=Head;
+        if(Head==nullptr)
+        {
+            Head=newNode;
+            newNode->next=Head;
+        }
+        if(index == 0)
+        {
+            Node *last=Head;
+            while(last->next!=Head)
+            last=last->next;
+
+            newNode->next=Head;
+            Head=newNode;
+            last->next=Head;
+            return; 
+        }
+        else
+        {
+            for(int i=0;i<index-1;i++)
+            {
+                temp=temp->next;
+                if (temp == Head) 
+                break;
+            }
+            newNode->next=temp->next;
+            temp->next=newNode;
+        }
+    }
+
+};
+int main()
+{
+    return 0;
+}
