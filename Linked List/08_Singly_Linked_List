@@ -1,0 +1,168 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+class Nodes
+{
+    public:
+    int val;
+    Nodes *Next;
+    public:
+    Nodes(int val)
+    {
+        this->val=val;
+        Next=nullptr;
+    };
+};
+class linkedList
+{
+    private: 
+    Nodes *Head;
+    public:
+    linkedList()
+    {
+        Head=nullptr;
+    }
+    void Display()
+    {
+        Nodes *p=Head;
+        while(p)
+        {
+            cout<<p->val<<"\n";
+            p=p->Next;
+        }
+    }
+    int Sum()
+    {
+        Nodes *p=Head;
+        int sum=0;
+        while(p)
+        {
+            sum=sum+p->val;
+            p=p->Next;
+        }
+        return sum;
+    }
+    int numberOfNodes()
+    {
+        Nodes *p=Head;
+        int count=0;
+        while(p)
+        {
+            count++;
+            p=p->Next;
+        }
+        return count;
+    }
+    int Max()
+    {
+        Nodes *p=Head;
+        int max=p->val;
+        while(p)
+        {
+            if((p->val)>max)
+            max=p->val;
+            p=p->Next;
+        }
+        return max;
+    }
+    int Search(int key)
+    {
+        Nodes *p=Head;
+        while(p)
+        {
+            if(p->val==key)
+            return p->val;
+            p=p->Next;
+        }
+    }
+    void Insert(int index, int val)
+    {
+        Nodes *p=Head;
+        Nodes *newNode= new Nodes(val);
+        if(index==0)
+        {
+            newNode->Next=Head;
+            Head=newNode;
+        }
+        else
+        {
+            for(int i=0;i<index-1 && p;i++)
+                p=p->Next;
+            if(p)
+            {
+                newNode->Next=p->Next;
+                p->Next=newNode;
+            }
+            else
+            {
+                cout<<"Index out of bound";
+                delete newNode;
+            }
+        }
+    }
+    void Delete(int index)
+    {
+        Nodes *p=Head;
+        Nodes *q=nullptr;
+        if(index<0 || Head==nullptr)
+        return;
+        if(index==0)
+        {
+            Head=Head->Next;
+            delete p;
+            return;
+        }
+        else
+        {
+        for(int i=0;i<index-1 && p;i++)
+        {
+            q=p;
+            p=p->Next;
+        }
+        q->Next=p->Next;
+        delete p;
+    }
+    }
+    void ReverseList()
+    {
+        Nodes *temp=Head;
+        int count=numberOfNodes();
+        int arr[count];
+        int i=0;
+        for(i=0;i<count;i++)
+        {
+            arr[i]=temp->val;
+            temp=temp->Next;
+        }
+        temp=Head;
+        for(i=count-1;i>=0;i--)
+        {
+            temp->val=arr[i];
+            temp=temp->Next;
+        }
+    }
+    void ReverseUsingTwoPointers()
+    {
+        Nodes *current=Head;
+        Nodes *next=nullptr;
+        Nodes *prev=nullptr;
+        while(current)
+        {
+            next=current->Next;
+            current->Next=prev;
+            prev=current;
+            current=next;
+        }
+    }
+};
+int main()
+{
+    linkedList list;
+    list.Insert(0,10);
+    list.Insert(1,11);
+    list.Insert(2,12);
+    list.Insert(3,13);
+    list.Insert(2,18);
+    list.ReverseUsingTwoPointers();
+    list.Display();
+}
