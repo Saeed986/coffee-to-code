@@ -1,0 +1,13 @@
+void ReverseUsingTwoPointers()
+    {
+        Nodes *current=Head;
+        Nodes *next=nullptr;
+        Nodes *prev=nullptr;
+        while(current)
+        {
+            next=current->Next;
+            current->Next=prev;
+            prev=current;
+            current=next;
+        }
+    }
